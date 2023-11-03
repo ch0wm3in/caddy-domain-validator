@@ -5,8 +5,8 @@ from watchdog.events import FileSystemEventHandler
 
 
 class HostnameChangeHandler(FileSystemEventHandler):
-    def __init__(self):
-        self.monitored_directory = os.environ.get('SITE_DIRECTORY')
+    def __init__(self, directory):
+        self.monitored_directory = directory
         self.valid_hostnames = set()
 
     def scan_hostnames(self) -> set[str]:

@@ -1,3 +1,5 @@
+import os
+
 from quart import Quart, request, jsonify
 from watchdog.observers import Observer
 
@@ -5,7 +7,8 @@ from handler import HostnameChangeHandler
 
 app = Quart(__name__)
 
-hostname_change_handler = HostnameChangeHandler()
+hostname_change_handler = HostnameChangeHandler(directory=os.environ.get('SITE_DIRECTORY'))
+
 observer = Observer()
 observer.schedule(hostname_change_handler, hostname_change_handler.monitored_directory, recursive=False)
 observer.start()
