@@ -37,3 +37,54 @@ pip install -r ./requirements.txt
 # mkdir -p sites/site_{1..9}
 LOG_LEVEL=info SITE_DIRECTORY=./sites python3 ./app/
 ```
+
+## Docker
+
+docker-compose.yml
+```yaml
+services:
+  caddy:
+    image: caddy
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - './data/caddy/data:/data'
+      - './data/caddy/conf:/etc/caddy'
+      - './data/static_sites:/sites'
+    networks:
+      - internal
+
+  validator:
+    image: ghcr.io/tyler71/caddy-domain-validator
+    environment:
+      LOG_LEVEL: info
+      SITE_DIRECTORY: '/sites'
+      HOST: '0.0.0.0'
+      APP_PORT: 8080
+    volumes:
+      - './data/static_sites:/sites'
+    networks:
+      - internal
+
+networks:
+  internal:
+```
+
+```Caddyfile
+{
+  on_demand_tls {
+    ask http://validator:8080/validate
+    interval 10h
+    burst 5
+  }
+}
+https:// {
+    tls {
+        on_demand
+    }
+    root * /sites/{host}
+    file_server
+}
+```
