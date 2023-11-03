@@ -7,12 +7,15 @@ from watchdog.events import FileSystemEventHandler
 class HostnameChangeHandler(FileSystemEventHandler):
     def __init__(self, directory):
         self.monitored_directory = directory
-        self.valid_hostnames = set()
+        self.valid_hostnames = self.scan_directory()
 
     def scan_directory(self) -> set[str]:
         self.valid_hostnames = set((item for item in os.listdir(self.monitored_directory)
                                     if os.path.isdir(os.path.join(self.monitored_directory, item))))
         return self.valid_hostnames
+
+    def check_hostname(self, hostname: str) -> bool:
+        return hostname in self.valid_hostnames
 
     def on_created(self, event) -> None:
         if event.is_directory:

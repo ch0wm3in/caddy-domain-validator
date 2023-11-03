@@ -29,16 +29,10 @@ observer.start()
 app.logger.info(f'Permitted domains: {" ".join(hostname_change_handler.valid_hostnames)}')
 
 
-def check_domain(domain: str) -> bool:
-    # sampled = '.'.join(domain.split('.')[-2:])
-    # return sampled in hostname_change_handler.valid_hostnames
-    return domain in hostname_change_handler.valid_hostnames
-
-
 @app.route('/validate', methods=['GET'])
 def main():
     domain = request.args.get('domain')
-    if check_domain(domain):
+    if hostname_change_handler.check_hostname(domain):
         return jsonify({'message': f'Domain {domain} is valid'}), VALID_DOMAIN_HTTP_RESPONSE
     else:
         return jsonify({'message': f'Domain {domain} is not valid'}), INVALID_DOMAIN_HTTP_RESPONSE
