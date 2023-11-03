@@ -40,7 +40,7 @@ LOG_LEVEL=info SITE_DIRECTORY=./sites python3 ./app/
 
 ## Docker
 
-docker-compose.yml
+**docker-compose.yml**
 ```yaml
 services:
   caddy:
@@ -72,6 +72,7 @@ networks:
   internal:
 ```
 
+**Caddyfile**
 ```Caddyfile
 {
   on_demand_tls {
