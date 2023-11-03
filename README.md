@@ -27,3 +27,13 @@ After loading, queries and changes to directories are O(1).
 | SITE_DIRECTORY | Directory to watch for changes. Not recursive | '/sites'  |             |
 | HOST           | Listen Address for app                        | '0.0.0.0' | '127.0.0.1' |
 | APP_PORT       | Port for app                                  | '8080'    | '8080'      |
+
+## Quickstart
+
+```bash
+git clone --depth=1 https://github.com/tyler71/caddy-domain-validator
+cd caddy-domain-validator/
+pip install -r ./requirements.txt
+# mkdir -p sites/site_{1..9}
+LOG_LEVEL=info SITE_DIRECTORY=./sites python3 ./app/
+```
