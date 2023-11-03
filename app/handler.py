@@ -9,7 +9,7 @@ class HostnameChangeHandler(FileSystemEventHandler):
         self.monitored_directory = directory
         self.valid_hostnames = set()
 
-    def scan_hostnames(self) -> set[str]:
+    def scan_directory(self) -> set[str]:
         self.valid_hostnames = set((item for item in os.listdir(self.monitored_directory)
                                     if os.path.isdir(os.path.join(self.monitored_directory, item))))
         return self.valid_hostnames
