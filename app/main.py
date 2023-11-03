@@ -1,24 +1,21 @@
-import logging
-
 from quart import Quart, request, jsonify
 from watchdog.observers import Observer
 
 from handler import HostnameChangeHandler
 
-logging.basicConfig(level=logging.INFO)
 app = Quart(__name__)
 
-event_handler = HostnameChangeHandler()
+hostname_change_handler = HostnameChangeHandler()
 observer = Observer()
-observer.schedule(event_handler, event_handler.monitored_directory, recursive=False)
+observer.schedule(hostname_change_handler, hostname_change_handler.monitored_directory, recursive=False)
 observer.start()
 
-app.logger.info(f'Permitted domains: {" ".join(event_handler.scan_hostnames())}')
+app.logger.info(f'Permitted domains: {" ".join(hostname_change_handler.scan_hostnames())}')
 
 
 def check_domain(domain: str) -> bool:
     sampled = '.'.join(domain.split('.')[-2:])
-    return sampled in event_handler.valid_hostnames
+    return sampled in hostname_change_handler.valid_hostnames
 
 
 @app.route('/validate', methods=['GET'])
