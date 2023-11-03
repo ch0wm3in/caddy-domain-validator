@@ -5,6 +5,15 @@ from watchdog.observers import Observer
 
 from handler import HostnameChangeHandler
 
+required_vars = {
+    'SITE_DIRECTORY',
+}
+current_vars = set(os.environ)
+
+missing_vars = required_vars.difference(current_vars)
+if len(missing_vars) > 0:
+    raise EnvironmentError(f"Missing vars: {' '.join(missing_vars)}")
+
 app = Quart(__name__)
 
 hostname_change_handler = HostnameChangeHandler(directory=os.environ.get('SITE_DIRECTORY'))
