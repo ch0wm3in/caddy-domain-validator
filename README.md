@@ -17,6 +17,9 @@ only the correct certificates are generated.
 
 ```
 
+When loading, it takes O(n) time with n being the number of directories under `SITE_DIRECTORY`
+After loading, queries and changes to directories are O(1).
+
 ## Environment
 
 | Variable | Purpose | Example |
