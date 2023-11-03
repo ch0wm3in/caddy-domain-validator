@@ -30,8 +30,9 @@ app.logger.info(f'Permitted domains: {" ".join(hostname_change_handler.valid_hos
 
 
 def check_domain(domain: str) -> bool:
-    sampled = '.'.join(domain.split('.')[-2:])
-    return sampled in hostname_change_handler.valid_hostnames
+    # sampled = '.'.join(domain.split('.')[-2:])
+    # return sampled in hostname_change_handler.valid_hostnames
+    return domain in hostname_change_handler.valid_hostnames
 
 
 @app.route('/validate', methods=['GET'])
