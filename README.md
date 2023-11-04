@@ -77,7 +77,7 @@ networks:
 {
   on_demand_tls {
     ask http://validator:8080/validate
-    interval 10h
+    interval 2m
     burst 5
   }
 }
