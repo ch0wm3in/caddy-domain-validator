@@ -34,7 +34,11 @@ observer = Observer()
 for directory in directories:
     abs_dir = directory.absolute()
     segment_set.add(directory.name)
-    hostname_change_handler = HostnameChangeHandler(directory=abs_dir, domain_set=domain_set, segment_set=segment_set)
+    hostname_change_handler = HostnameChangeHandler(directory=abs_dir,
+                                                    root_directory=monitored_directory,
+                                                    domain_set=domain_set,
+                                                    segment_set=segment_set,
+                                                    )
     observer.schedule(hostname_change_handler, abs_dir, recursive=False)
 
 observer.start()
