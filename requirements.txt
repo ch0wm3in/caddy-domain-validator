@@ -1,3 +1,2 @@
 quart
-watchdog
 uvicorn
