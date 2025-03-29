@@ -26,7 +26,7 @@ git clone --depth=1 https://github.com/ch0wm3in/caddy-domain-validator
 cd caddy-domain-validator/
 pip install -r ./requirements.txt
 # mkdir -p sites/site_{1..9}
-LOG_LEVEL=info SITE_DIRECTORY=./sites python3 ./app/
+LOG_LEVEL=info DOMAIN_REGEX=.* python3 ./app/
 ```
 
 ## Docker
@@ -45,23 +45,14 @@ services:
       - './data/caddy/data:/data'
       - './data/caddy/conf:/etc/caddy'
       - './data/static_sites:/sites'
-    networks:
-      - internal
 
   validator:
     image: ghcr.io/ch0wm3in/caddy-domain-validator
     environment:
       LOG_LEVEL: info
-      SITE_DIRECTORY: '/sites'
+      DOMAIN_REGEX: '.*'
       HOST: '0.0.0.0'
       APP_PORT: 8080
-    volumes:
-      - './data/static_sites:/sites'
-    networks:
-      - internal
-
-networks:
-  internal:
 ```
 
 ### Caddyfile
